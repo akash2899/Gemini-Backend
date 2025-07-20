@@ -1,5 +1,5 @@
 // controllers/chatroomController.js
-const Chatroom = require('../models/chatroomModel');
+const Chatroom = require("../models/chatroomModel");
 const { askGemini } = require("../services/geminiService");
 
 // Create a new chatroom
@@ -13,9 +13,11 @@ exports.createChatroom = async (req, res) => {
       user: userId,
     });
 
-    res.status(201).json({ message: 'Chatroom created', chatroom });
+    res.status(201).json({ message: "Chatroom created", chatroom });
   } catch (err) {
-    res.status(500).json({ message: 'Error creating chatroom', error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error creating chatroom", error: err.message });
   }
 };
 
@@ -28,7 +30,9 @@ exports.getChatrooms = async (req, res) => {
 
     res.status(200).json({ chatrooms });
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching chatrooms', error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching chatrooms", error: err.message });
   }
 };
 exports.sendMessage = async (req, res) => {
