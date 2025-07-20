@@ -4,6 +4,10 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const mongoose = require('mongoose');
+
+const chatroomRoutes = require('./routes/chatroomRoutes');
+
+
 const app = express();
 
 // Connect to MongoDB
@@ -12,7 +16,7 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(express.json());
-
+app.use('/chatroom', chatroomRoutes);
 // Routes (Import after middlewares)
 
 app.use('/auth', authRoutes);
