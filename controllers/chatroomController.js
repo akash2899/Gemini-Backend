@@ -1,5 +1,6 @@
 // controllers/chatroomController.js
 const Chatroom = require('../models/chatroomModel');
+const { askGemini } = require("../services/geminiService");
 
 // Create a new chatroom
 exports.createChatroom = async (req, res) => {
@@ -28,5 +29,28 @@ exports.getChatrooms = async (req, res) => {
     res.status(200).json({ chatrooms });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching chatrooms', error: err.message });
+  }
+};
+exports.sendMessage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { message } = req.body;
+    const userId = req.user.id;
+
+    // Save user message (you can skip saving to DB for now)
+    console.log(`💬 User says: ${message}`);
+
+    // Ask Gemini
+    const geminiReply = await askGemini(message);
+
+    // Send back Gemini's reply
+    res.status(200).json({
+      success: true,
+      userMessage: message,
+      geminiResponse: geminiReply,
+    });
+  } catch (err) {
+    console.error("❌ Error in sendMessage:", err);
+    res.status(500).json({ message: "Failed to send message" });
   }
 };
